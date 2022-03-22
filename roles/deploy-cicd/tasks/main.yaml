@@ -6,7 +6,7 @@
     artifact_id: myweb
     extension: war
     version: "{{version}}"
-    username: "${NEXUS_USER}"
-    password: "${NEXUS_PASSWORD}"    
+    username: "{{nexus_user}}"
+    password: "{{nexus_password}}"    
     repository_url: 'http://54.89.230.60/repository/java-releases/'
     dest: /tmp/web-app.war    
