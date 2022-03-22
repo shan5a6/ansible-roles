@@ -3,10 +3,10 @@
 - name: Download a WAR File to the Tomcat webapps directory to be deployed
   maven_artifact:
     group_id: in.shan5a6
-    artifact_id: in.shan5a6
+    artifact_id: myweb
     extension: war
     version: "{{version}}"
     username: "${NEXUS_USER}"
     password: "${NEXUS_PASSWORD}"    
-    repository_url: 'http://54.89.230.60/java-releases/'
+    repository_url: 'http://54.89.230.60/repository/java-releases/'
     dest: /tmp/web-app.war    
