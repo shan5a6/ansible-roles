@@ -1,4 +1,9 @@
 ---
+- name: Remove the old war files
+  file:
+    state: absent
+    path: /tmp/*.war
+
 # Download a WAR File to the Tomcat webapps directory to be deployed
 - name: Download a WAR File to the Tomcat webapps directory to be deployed
   maven_artifact:
@@ -9,10 +14,16 @@
     username: "{{nexus_user}}"
     password: "{{nexus_password}}"    
     repository_url: 'http://54.89.230.60/repository/java-releases/'
-    dest: "{{tomcat_path}}/webapps/app.war"
+    # dest: "{{tomcat_path}}/webapps/app.war"
+    dest: "/tmp/"
     owner: "{{service_account}}"
     group: "{{service_account}}" 
-  
+
+- name:  Copy the artifact to the target folder
+  connection: localhost
+  copy:
+    src: /tmp/*.war
+    dest: "{{tomcat_path}}/webapps/app.war"
   register: deployment_status
 
 - name: Restart tomcat services
