@@ -1,0 +1,43 @@
+---
+- name: Installing Java
+  yum:
+    name: java-"{{java_version}}"
+    state: present
+
+- name: Downloading tomcat
+  get_url:
+    url: "http://www-eu.apache.org/dist/tomcat/tomcat-8/v${{tomcat_version}}/bin/apache-tomcat-${{tomcat_version}}.tar.gz"
+    dest: /tmp/tomcat.tar.gz
+
+- name: Untar tomcat application
+  unarchive:
+    src: /tmp/tomcat.tar.gz
+    dest: "{{tomcat_path}}"
+    remote_src: yes
+
+- name: Creating tomcat service
+  template:
+    src: tomcat-service.j2
+    dest: dest=/etc/systemd/system/tomcat-service.service
+  notify:
+    - reload deamons
+
+- name: Enable tomcat service
+  systemd:
+    name: tomcat-service
+    enabled: yes    
+
+- name: Replace context.xml file
+  template:
+    src: context.xml.j2
+    dest: "{{context_path}}"
+  notify:
+    - restart tomcat
+
+- name: Replace tomcat-users.xml file
+  template:
+    src: tomcat-users.xml
+    dest: "{{tomcat_users_path}}"   
+  notify:
+    - restart tomcat
+
