@@ -20,11 +20,11 @@
     group: "{{service_account}}" 
 
 - name:  Copy the artifact to the target folder
-  connection: localhost
-  copy:
-    src: /tmp/*.war
-    dest: "{{tomcat_path}}/webapps/app.war"
-  register: deployment_status
+  local_action:
+    copy:
+      src: /tmp/*.war
+      dest: "{{tomcat_path}}/webapps/app.war"
+    register: deployment_status
 
 - name: Restart tomcat services
   systemd:
