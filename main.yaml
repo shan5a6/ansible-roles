@@ -1,0 +1,5 @@
+---
+- name: Devops play
+  hosts: localhost
+  roles:
+    - tomcat
