@@ -24,7 +24,7 @@
     copy:
       src: /tmp/*.war
       dest: "{{tomcat_path}}/webapps/app.war"
-    register: deployment_status
+  register: deployment_status
 
 - name: Restart tomcat services
   systemd:
