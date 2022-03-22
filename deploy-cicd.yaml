@@ -1,0 +1,5 @@
+---
+- name: Deploy artifact to the environment
+  hosts: "{{env}}"
+  roles:
+    - deploy-cicd
