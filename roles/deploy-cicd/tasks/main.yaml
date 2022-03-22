@@ -1,8 +1,8 @@
 ---
-- name: Remove the old war files
-  file:
-    state: absent
-    path: /tmp/*.war
+# - name: Remove the old war files
+#   file:
+#     state: absent
+#     path: /tmp/*.war
 
 # Download a WAR File to the Tomcat webapps directory to be deployed
 - name: Download a WAR File to the Tomcat webapps directory to be deployed
@@ -21,8 +21,9 @@
 
 - name:  Copy the artifact to the target folder
   copy:
-    src: /tmp/*.war
+    src: /tmp/*{{version}}*.war
     dest: "{{tomcat_path}}/webapps/app.war"
+    remote_src: yes
   register: deployment_status
 
 - name: Restart tomcat services
