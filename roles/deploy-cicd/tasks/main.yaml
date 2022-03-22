@@ -18,10 +18,11 @@
     dest: "/tmp/"
     owner: "{{service_account}}"
     group: "{{service_account}}" 
+  register: artifact_name
 
 - name:  Copy the artifact to the target folder
   copy:
-    src: /tmp/*{{version}}*.war
+    src: "{{artifact_name.dest}}"
     dest: "{{tomcat_path}}/webapps/app.war"
     remote_src: yes
   register: deployment_status
