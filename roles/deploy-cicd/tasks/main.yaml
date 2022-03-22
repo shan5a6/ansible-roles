@@ -11,5 +11,13 @@
     repository_url: 'http://54.89.230.60/repository/java-releases/'
     dest: "{{tomcat_path}}/webapps/app.war"
     owner: "{{service_account}}"
-    group: "{{service_account}}"  
+    group: "{{service_account}}" 
+  
+  register: deployment_status
+
+- name: Restart tomcat services
+  systemd:
+    name: tomcat-service
+    state: restarted
+  when: deployment_status.changed
 
