@@ -2,8 +2,8 @@
 Description=Tomcat service 
 
 [Service]
-User=ec2-user
-ExecStart="{{tomcat_path}}/bin/startup.sh"
+User={{service_account}}
+ExecStart={{tomcat_path}}/bin/catalina.sh run
 TimeoutSec=30
 Restart=on-failure
 RestartSec=30

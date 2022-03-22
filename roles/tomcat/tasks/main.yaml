@@ -1,43 +1,62 @@
 ---
 - name: Installing Java
   yum:
-    name: java-"{{java_version}}"
+    name: java-{{java_version}}-openjdk-devel
     state: present
 
 - name: Downloading tomcat
   get_url:
-    url: "http://www-eu.apache.org/dist/tomcat/tomcat-8/v${{tomcat_version}}/bin/apache-tomcat-${{tomcat_version}}.tar.gz"
+    url: http://www-eu.apache.org/dist/tomcat/tomcat-8/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz
     dest: /tmp/tomcat.tar.gz
+
+- name: Creates tomcat folder
+  file:
+    path: "{{tomcat_path}}"
+    state: directory
+    owner: "{{service_account}}"
+    group: "{{service_account}}"
 
 - name: Untar tomcat application
   unarchive:
     src: /tmp/tomcat.tar.gz
     dest: "{{tomcat_path}}"
-    remote_src: yes
+    extra_opts: [--strip-components=1]
+    owner: "{{service_account}}"
+    group: "{{service_account}}"
 
 - name: Creating tomcat service
   template:
     src: tomcat-service.j2
-    dest: dest=/etc/systemd/system/tomcat-service.service
+    dest: /etc/systemd/system/tomcat-service.service
   notify:
     - reload deamons
+    - restart tomcat
 
 - name: Enable tomcat service
   systemd:
     name: tomcat-service
     enabled: yes    
 
+- name: Restart tomcat
+  systemd:
+    name: tomcat-service
+    state: restarted
+    
 - name: Replace context.xml file
   template:
     src: context.xml.j2
-    dest: "{{context_path}}"
+    dest: "{{context_path}}/context.xml"
+    owner: "{{service_account}}"
+    group: "{{service_account}}"  
   notify:
     - restart tomcat
 
 - name: Replace tomcat-users.xml file
   template:
-    src: tomcat-users.xml
-    dest: "{{tomcat_users_path}}"   
+    src: tomcat-users.xml.j2
+    dest: "{{tomcat_users_path}}/tomcat-users.xml"  
+    owner: "{{service_account}}"
+    group: "{{service_account}}"   
   notify:
     - restart tomcat
 
