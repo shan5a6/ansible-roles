@@ -4,3 +4,4 @@ tomcat_version: "8.5.77"
 context_path: "{{tomcat_path}}/webapps/manager/META-INF/"
 tomcat_users_path: "{{tomcat_path}}/conf/"
 service_account: ec2-user
+nexusserverip: 35.165.235.255
