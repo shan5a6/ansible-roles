@@ -1,0 +1,25 @@
+---
+- name: download the artifact from the nexus
+  get_url:
+    url: http://{{nexusserverip}}/repository/{{nexus_repo}}/{{nexus_appname}}/{{artifact_name}}.tar.gz
+    dest: /tmp/{{artifact_name}}.tar.gz
+    url_username: "{{nexus_username}}"
+    url_password: "{{nexus_password}}"
+
+- name: untar tomcat application
+  unarchive:
+    src: /tmp/{{artifact_name}}.tar.gz
+    dest: "{{dotnet_path}}"
+    extra_opts: [--strip-components=2]
+    owner: "{{dotnet_service_account}}"
+    group: "{{dotnet_service_account}}"
+    remote_src: yes
+  register: deployment_status
+
+- name: Restart dotnet service
+  systemd:
+    name: dotnet-service
+    state: restarted
+  when: deployment_status.changed
+
+

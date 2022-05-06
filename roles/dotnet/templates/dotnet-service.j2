@@ -1,0 +1,15 @@
+[Unit]
+Description=Dotnet service 
+
+[Service]
+User={{dotnet_service_account}}
+ExecStart=/bin/dotnet {{dotnet_path}}/{{app_name}}.dll --urls=http://0.0.0.0:{{dotnet_port}}
+SyslogIdentifier=dotnet
+TimeoutSec=30
+Restart=on-failure
+RestartSec=30
+StartLimitInterval=350
+StartLimitBurst=10
+
+[Install]
+WantedBy=multi-user.target

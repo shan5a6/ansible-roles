@@ -1,0 +1,29 @@
+---
+- name: Enable dotnet package
+  template:
+    src: dotnetrepo.j2
+    dest: /etc/yum.repos.d/dotnet.repo
+    
+- name: yum-clean-metadata
+  command: yum clean metadata
+  args:
+    warn: no    
+
+- name: creating application folders
+  file:
+    name: "{{dotnet_path}}"
+    state: directory
+    mode: 0755
+    owner: "{{dotnet_service_account}}"
+
+- name: Creating dotnet service
+  template:
+    src: dotnet-service.j2
+    dest: /etc/systemd/system/dotnet-service.service
+  notify:
+    - reload deamons
+
+- name: installing dotnet "{{dotnet_version}}"
+  yum:
+    name: dotnet-sdk-{{dotnet_version}}
+    state: present
