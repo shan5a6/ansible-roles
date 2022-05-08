@@ -13,7 +13,7 @@ ansible-playbook -i hosts deploy-cicd.yaml -e "env=dev/sit/uat/pt/prod" -e "vers
 ### Running dotnet role for installing and configure dotnet in the servers
 ```
 Syntax:
-ansible-playbook -i hosts main.yaml -e "env=dev/sit/uat/pt/prod --ask-pass" 
+ansible-playbook -i hosts main.yaml -e "env=dev/sit/uat/pt/prod" --ask-pass
 Note: Make sure you are giving role name as dotnet
 ```
 
