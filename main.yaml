@@ -2,4 +2,4 @@
 - name: Devops play
   hosts: "{{env}}"
   roles:
-    - tomcat
+    - dotnet

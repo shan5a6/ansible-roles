@@ -1,0 +1,5 @@
+---
+- name: restart dotnet
+  systemd:
+    name: dotnet-service
+    state: restarted
