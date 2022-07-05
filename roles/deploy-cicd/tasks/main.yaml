@@ -8,7 +8,7 @@
     version: "{{version}}"
     username: "{{nexus_user}}"
     password: "{{nexus_password}}"    
-    repository_url: 'http://{{nexusserverip}}/repository/java-releases/'
+    repository_url: 'http://{{nexusserverip}}/repository/{{nexus_repo}}/'
     dest: "/tmp/"
     owner: "{{service_account}}"
     group: "{{service_account}}" 
