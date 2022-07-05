@@ -6,4 +6,4 @@
 prodserver
 
 [all:vars]
-ansible_user=dvsadmin
+ansible_user=ec2-user
