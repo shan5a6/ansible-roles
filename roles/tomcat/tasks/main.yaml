@@ -6,7 +6,7 @@
 
 - name: Downloading tomcat
   get_url:
-    url: http://www-eu.apache.org/dist/tomcat/tomcat-8/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz
+    url: https://dlcdn.apache.org/tomcat/tomcat-8/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz
     dest: /tmp/tomcat.tar.gz
 
 - name: Creates tomcat folder
