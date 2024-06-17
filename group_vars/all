@@ -1,16 +1,16 @@
 ##### Tomcat variables
 java_version: 1.8.0
 tomcat_path: "/opt/tomcat"
-tomcat_version: "8.5.99"
+tomcat_version: "8.5.100"
 context_path: "{{tomcat_path}}/webapps/manager/META-INF/"
 tomcat_users_path: "{{tomcat_path}}/conf/"
 service_account: ec2-user
 
 ##### Nexus details
-nexusserverip: 172.31.90.229
-nexus_repo: javaapp1
+nexusserverip: /opt/tomcat
+nexus_repo: javaapplications
 # dotnet cicd variable
-nexus_appname: myapp1
+nexus_appname: app1  ### This variable is only for dotnet applications
 
 ##### Dotnet variables
 app_name: "dvsazbatch1"
